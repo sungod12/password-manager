@@ -18,6 +18,7 @@ function PassManager() {
   const [authorized, setAuth] = useState(true);
 
   const fetch = () => {
+    console.log("runned...");
     Axios.get(`https://server-app14.herokuapp.com/showPasswords/${uid}`).then((response) => {
       setList(response.data);
     });
@@ -71,7 +72,6 @@ function PassManager() {
       firebase.auth().signOut();
       history.push("/signIn");
     }
-    
   })
 
   const handleChange = (e) => {

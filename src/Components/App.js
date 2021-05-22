@@ -5,7 +5,7 @@ import Login from "./Login";
 import ProtectedRoutes from "../Routes/ProtectedRoutes";
 import PassManager from "./PassManager";
 import Navbar from "./Navbar";
-import firebase from "./firebase";
+
 
 function App() {
   return (

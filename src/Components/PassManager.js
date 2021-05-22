@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
-// import "./css/App.css";
 import { useHistory, useParams } from "react-router-dom";
 import firebase from "./firebase";
+import "firebase/auth";
 
 function PassManager() {
+  
   const { uname } = useParams();
   const history = useHistory();
   const uid = localStorage.getItem("authorized");
@@ -16,12 +17,15 @@ function PassManager() {
   const [list, setList] = useState([]);
   const [state, setState] = useState(false);
   const [authorized, setAuth] = useState(true);
+  const url="https://server-app14.herokuapp.com";
+  // eslint-disable-next-line
+  const lurl="http://localhost:3001";
+   
 
-  const fetch = () => {
+  const fetch = async() => {
     console.log("runned...");
-    Axios.get(`https://server-app14.herokuapp.com/showPasswords/${uid}`).then((response) => {
-      setList(response.data);
-    });
+    const response=await Axios.get(`${url}/showPasswords/${uid}`);
+    setList(response.data);
   };
 
   const handleSubmit = (e) => {
@@ -40,13 +44,13 @@ function PassManager() {
       if (containsPass)
         alert(`You already have a password for ${details.title}`);
       else {
-        Axios.post("https://server-app14.herokuapp.com/addPassword", {
+        Axios.post(`${url}/addPassword`, {
           id: uid,
           title:
             details.title[0].toUpperCase() +
             details.title.substr(1, details.title.length),
           password: details.pass,
-        });
+        }).catch(err=>console.log(err));
       }
       setDetails(info);
     }
@@ -85,13 +89,13 @@ function PassManager() {
 
   const deletePass = (value) => {
     setState(true);
-    Axios.post(`https://server-app14.herokuapp.com/deletePassword/${uid}`, {
+    Axios.post(`${url}/deletePassword/${uid}`, {
       id: value,
     });
   };
 
   const decryptPassword = (val) => {
-    Axios.post(`https://server-app14.herokuapp.com/decryptPassword`, {
+    Axios.post(`${url}/decryptPassword`, {
       password: val.password,
       iv: val.iv,
     }).then((res) => {

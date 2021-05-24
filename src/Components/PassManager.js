@@ -22,7 +22,7 @@ function PassManager({setName}) {
    
 
   const fetch = () => {
-    Axios.get(`${lurl}/showPasswords/${uid}`).then(response=>
+    Axios.get(`${url}/showPasswords/${uid}`).then(response=>
       setList(response.data)
     );
   };
@@ -53,7 +53,7 @@ function PassManager({setName}) {
       if (containsPass)
         alert(`You already have a password for ${details.title}`);
       else {
-        Axios.post(`${lurl}/addPassword`, {
+        Axios.post(`${url}/addPassword`, {
           id: uid,
           title:
             details.title[0].toUpperCase() +
@@ -67,13 +67,13 @@ function PassManager({setName}) {
 
   const deletePass = (value) => {
     setState(true);
-    Axios.post(`${lurl}/deletePassword/${uid}`, {
+    Axios.post(`${url}/deletePassword/${uid}`, {
       id: value,
     });
   };
 
   const decryptPassword = (val) => {
-    Axios.post(`${lurl}/decryptPassword`, {
+    Axios.post(`${url}/decryptPassword`, {
       password: val.password,
       iv: val.iv,
     }).then((res) => {

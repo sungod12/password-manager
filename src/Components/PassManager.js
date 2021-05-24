@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory} from "react-router-dom";
 import firebase from "./firebase";
 import "firebase/auth";
 
-function PassManager() {
-  
-  const { uname } = useParams();
+function PassManager({setName}) {
   const history = useHistory();
   const uid = localStorage.getItem("authorized");
   const info = {
@@ -17,16 +15,27 @@ function PassManager() {
   const [list, setList] = useState([]);
   const [state, setState] = useState(false);
   const [authorized, setAuth] = useState(true);
+  // eslint-disable-next-line
   const url="https://server-app14.herokuapp.com";
   // eslint-disable-next-line
   const lurl="http://localhost:3001";
    
 
-  const fetch = async() => {
-    console.log("runned...");
-    const response=await Axios.get(`${url}/showPasswords/${uid}`);
-    setList(response.data);
+  const fetch = () => {
+    Axios.get(`${lurl}/showPasswords/${uid}`).then(response=>
+      setList(response.data)
+    );
   };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setDetails({
+      ...details,
+      [name]: value,
+    });
+    // console.log(details);
+  };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,7 +53,7 @@ function PassManager() {
       if (containsPass)
         alert(`You already have a password for ${details.title}`);
       else {
-        Axios.post(`${url}/addPassword`, {
+        Axios.post(`${lurl}/addPassword`, {
           id: uid,
           title:
             details.title[0].toUpperCase() +
@@ -56,6 +65,22 @@ function PassManager() {
     }
   };
 
+  const deletePass = (value) => {
+    setState(true);
+    Axios.post(`${lurl}/deletePassword/${uid}`, {
+      id: value,
+    });
+  };
+
+  const decryptPassword = (val) => {
+    Axios.post(`${lurl}/decryptPassword`, {
+      password: val.password,
+      iv: val.iv,
+    }).then((res) => {
+      alert(`Your password is ${res.data}`);
+    });
+  }
+  
   useEffect(() => {
     fetch();
     //eslint-disable-next-line
@@ -74,48 +99,23 @@ function PassManager() {
     if(!authorized){
       localStorage.removeItem("authorized");
       firebase.auth().signOut();
+      setName("");
       history.push("/signIn");
     }
   })
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setDetails({
-      ...details,
-      [name]: value,
-    });
-    // console.log(details);
-  };
-
-  const deletePass = (value) => {
-    setState(true);
-    Axios.post(`${url}/deletePassword/${uid}`, {
-      id: value,
-    });
-  };
-
-  const decryptPassword = (val) => {
-    Axios.post(`${url}/decryptPassword`, {
-      password: val.password,
-      iv: val.iv,
-    }).then((res) => {
-      alert(`Your password is ${res.data}`);
-    });
-  };
+  
+  
   return (
     <>
       <div className="container max-w-full space-y-2.5  text-white ">
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col items-center space-y-3"
+          className="flex flex-col space-y-3"
         >
-          <h1 className="text-center text-3xl capitalize md:text-4xl">
-            Welcome {uname}
-          </h1>
           <button
             type="button"
             onClick={()=>setAuth(false)}
-            className="bg-blue-300 px-6 py-2 outline-none rounded-3xl font-bold xl:px-3.5  hover:bg-blue-500"
+            className="bg-blue-300 px-6 py-2 ml-auto mr-2.5 outline-none rounded-3xl font-bold xl:px-3.5  hover:bg-blue-500"
           >
             Logout
           </button>       

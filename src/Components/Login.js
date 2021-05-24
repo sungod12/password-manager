@@ -2,8 +2,8 @@ import React from "react";
 import RForm from "./RForm";
 
 
-function Login() {
-  return <RForm btnName="SignIn" setFunction="Sign in to"/>
+function Login({setUsername}) {
+  return <RForm btnName="SignIn" setFunction="Sign in to" setName={setUsername}/>
 }
 
 export default Login;

@@ -4,7 +4,9 @@ import 'firebase/auth';
 import { useHistory } from "react-router-dom";
 
 
-function RForm({ btnName,setFunction }) {
+
+function RForm({ btnName,setFunction,setName }) {
+  // const {setProperties}=useProps();
   const info = {
     email: "",
     password: "",
@@ -43,12 +45,15 @@ function RForm({ btnName,setFunction }) {
         .signInWithEmailAndPassword(details.email, details.password)
         .then((userCredential) => {
           const id = userCredential.user.uid;
-          localStorage.setItem("authorized", id);
           const name = userCredential.user.email.split("@", 1);
-          history.push({ pathname: `/passaver/${name}`, state: { id: id } });
+          localStorage.setItem("authorized", id);
+          setName(name);
+          history.push({ pathname: `/passaver/${name}`, state: { id} });
         })
         .catch((error) => {
-          alert(error.message);
+          if(error.message==="The password is invalid or the user does not have a password."){
+              alert("The password is invalid.Please try again");
+          }
         });
     }
   };

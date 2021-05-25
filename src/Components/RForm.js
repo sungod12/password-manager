@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React, {useState } from "react";
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { useHistory } from "react-router-dom";
+import Navbar from "./Navbar";
 
 
-
-function RForm({ btnName,setFunction,setName }) {
-  // const {setProperties}=useProps();
+function RForm({ btnName,setFunction }) {
   const info = {
     email: "",
     password: "",
@@ -45,10 +44,11 @@ function RForm({ btnName,setFunction,setName }) {
         .signInWithEmailAndPassword(details.email, details.password)
         .then((userCredential) => {
           const id = userCredential.user.uid;
-          const name = userCredential.user.email.split("@", 1);
+          // name.current=userCredential.user.email.split("@", 1);
+          const uname=userCredential.user.email.split("@", 1);
           localStorage.setItem("authorized", id);
-          setName(name);
-          history.push({ pathname: `/passaver/${name}`, state: { id} });
+          // console.log(name.current);
+          history.push({ pathname: `/passaver/${uname}`, state: { id} });
         })
         .catch((error) => {
           if(error.message==="The password is invalid or the user does not have a password."){
@@ -57,8 +57,10 @@ function RForm({ btnName,setFunction,setName }) {
         });
     }
   };
+ 
   return (
     <>
+      <Navbar uname={""}/>
       <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>

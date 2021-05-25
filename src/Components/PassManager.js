@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
-import { useHistory} from "react-router-dom";
+import { useHistory, useParams} from "react-router-dom";
 import firebase from "./firebase";
 import "firebase/auth";
+import Navbar from "./Navbar";
 
-function PassManager({setName}) {
+function PassManager() {
   const history = useHistory();
+  const {uname}=useParams();
   const uid = localStorage.getItem("authorized");
   const info = {
     title: "",
@@ -22,7 +24,7 @@ function PassManager({setName}) {
    
 
   const fetch = () => {
-    Axios.get(`${url}/showPasswords/${uid}`).then(response=>
+    Axios.get(`${lurl}/showPasswords/${uid}`).then(response=>
       setList(response.data)
     );
   };
@@ -53,7 +55,7 @@ function PassManager({setName}) {
       if (containsPass)
         alert(`You already have a password for ${details.title}`);
       else {
-        Axios.post(`${url}/addPassword`, {
+        Axios.post(`${lurl}/addPassword`, {
           id: uid,
           title:
             details.title[0].toUpperCase() +
@@ -67,13 +69,13 @@ function PassManager({setName}) {
 
   const deletePass = (value) => {
     setState(true);
-    Axios.post(`${url}/deletePassword/${uid}`, {
+    Axios.post(`${lurl}/deletePassword/${uid}`, {
       id: value,
     });
   };
 
   const decryptPassword = (val) => {
-    Axios.post(`${url}/decryptPassword`, {
+    Axios.post(`${lurl}/decryptPassword`, {
       password: val.password,
       iv: val.iv,
     }).then((res) => {
@@ -99,7 +101,6 @@ function PassManager({setName}) {
     if(!authorized){
       localStorage.removeItem("authorized");
       firebase.auth().signOut();
-      setName("");
       history.push("/signIn");
     }
   })
@@ -107,6 +108,7 @@ function PassManager({setName}) {
   
   return (
     <>
+      <Navbar uname={uname?uname:""}/>
       <div className="container max-w-full space-y-2.5  text-white ">
         <form
           onSubmit={handleSubmit}

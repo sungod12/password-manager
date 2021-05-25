@@ -3,11 +3,11 @@ import { NavLink } from "react-router-dom";
 
 function Navbar({ uname }) {
   const Component = () => {
-    if (uname[0]) {
+    if (uname) {
       return (
         <div className="p-5 flex justify-between capitalize font-semibold text-white">
           <p>Home</p>
-          <div>Welcome {uname[0]}</div>
+          <div>Welcome {uname}</div>
         </div>
       );
     } else {
@@ -29,7 +29,7 @@ function Navbar({ uname }) {
         </div>
       );
     }
-  };
+  }
   return <Component />;
 }
 

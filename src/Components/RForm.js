@@ -12,6 +12,7 @@ function RForm({ btnName,setFunction }) {
   };
   const [details,setDetails]=useState(info);
   const history = useHistory();
+  const [loading,setLoading]=useState(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDetails({
@@ -29,36 +30,43 @@ function RForm({ btnName,setFunction }) {
             .createUserWithEmailAndPassword(details.email, details.password)
             .then((userCredential) => {
               // Signed in
+              setLoading(true);
+              alert("You have registered successfully....");
               history.push("/signIn");
             })
             .catch((error) => {
-              var errorMessage = error.message;
-              console.log(errorMessage);
+              if(error.message){
+                 let choice=window.confirm("Would you like to sign in instead??");
+                 if(choice)
+                    history.push("/signIn");
+              }
             });
-          setDetails(info);
         }
       }
     } else {
-      firebase
+        firebase
         .auth()
         .signInWithEmailAndPassword(details.email, details.password)
-        .then((userCredential) => {
+        .then(async(userCredential) => {
+          setLoading(true);
           const id = userCredential.user.uid;
           const uname=userCredential.user.email.split("@", 1);
-          localStorage.setItem("authorized", id);
+          const token= await userCredential.user.getIdToken(true);
+          localStorage.setItem("authorized",token);
           history.push({ pathname: `/passaver/${uname}`, state: { id} });
         })
         .catch((error) => {
-          if(error.message==="The password is invalid or the user does not have a password."){
+          if(error.message){
               alert("The password is invalid.Please try again");
           }
         });
     }
+    setDetails(info);
   };
  
   return (
     <>
-      <Navbar uname={""}/>
+      <Navbar/>
       <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
@@ -107,6 +115,7 @@ function RForm({ btnName,setFunction }) {
             </div>
             <div>
               <button
+                disabled={loading}
                 type="submit"
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >

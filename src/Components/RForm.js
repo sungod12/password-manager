@@ -44,10 +44,8 @@ function RForm({ btnName,setFunction }) {
         .signInWithEmailAndPassword(details.email, details.password)
         .then((userCredential) => {
           const id = userCredential.user.uid;
-          // name.current=userCredential.user.email.split("@", 1);
           const uname=userCredential.user.email.split("@", 1);
           localStorage.setItem("authorized", id);
-          // console.log(name.current);
           history.push({ pathname: `/passaver/${uname}`, state: { id} });
         })
         .catch((error) => {

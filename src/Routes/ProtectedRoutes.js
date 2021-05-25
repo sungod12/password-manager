@@ -8,7 +8,7 @@ function ProtectedRoutes({ isAuth,component: Component, ...rest }) {
       {...rest}
       render={(props) => {
         if (storage) {
-          return <Component setName={rest.setName}/>
+          return <Component/>
         } else {
           return <Redirect to={{ pathname: "/signIn", state: { from: props.location } }} />
         }

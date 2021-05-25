@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import { useHistory, useParams} from "react-router-dom";
-import firebase from "firebase/app";
+import firebase from "./firebase";
 import "firebase/auth";
 import Navbar from "./Navbar";
 

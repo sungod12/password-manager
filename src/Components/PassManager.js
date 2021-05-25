@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import { useHistory, useParams} from "react-router-dom";
-import firebase from "./firebase";
+import firebase from "firebase/app";
 import "firebase/auth";
 import Navbar from "./Navbar";
 
@@ -24,7 +24,7 @@ function PassManager() {
    
 
   const fetch = () => {
-    Axios.get(`${lurl}/showPasswords/${uid}`).then(response=>
+    Axios.get(`${url}/showPasswords/${uid}`).then(response=>
       setList(response.data)
     );
   };
@@ -55,7 +55,7 @@ function PassManager() {
       if (containsPass)
         alert(`You already have a password for ${details.title}`);
       else {
-        Axios.post(`${lurl}/addPassword`, {
+        Axios.post(`${url}/addPassword`, {
           id: uid,
           title:
             details.title[0].toUpperCase() +
@@ -69,13 +69,13 @@ function PassManager() {
 
   const deletePass = (value) => {
     setState(true);
-    Axios.post(`${lurl}/deletePassword/${uid}`, {
+    Axios.post(`${url}/deletePassword/${uid}`, {
       id: value,
     });
   };
 
   const decryptPassword = (val) => {
-    Axios.post(`${lurl}/decryptPassword`, {
+    Axios.post(`${url}/decryptPassword`, {
       password: val.password,
       iv: val.iv,
     }).then((res) => {
@@ -108,7 +108,7 @@ function PassManager() {
   
   return (
     <>
-      <Navbar uname={uname?uname:""}/>
+      <Navbar uname={uname}/>
       <div className="container max-w-full space-y-2.5  text-white ">
         <form
           onSubmit={handleSubmit}

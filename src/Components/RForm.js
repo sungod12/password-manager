@@ -1,18 +1,18 @@
-import React, {useState } from "react";
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import React, { useState } from "react";
+import firebase from "firebase/app";
+import "firebase/auth";
 import { useHistory } from "react-router-dom";
 import Navbar from "./Navbar";
 
-
-function RForm({ btnName,setFunction }) {
+function RForm({ btnName, setFunction }) {
   const info = {
     email: "",
     password: "",
   };
-  const [details,setDetails]=useState(info);
+  const [details, setDetails] = useState(info);
   const history = useHistory();
-  const [loading,setLoading]=useState(false);
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDetails({
@@ -20,53 +20,51 @@ function RForm({ btnName,setFunction }) {
       [name]: value,
     });
   };
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async(e) => {
     e.preventDefault();
     if (btnName === "Register") {
       if (Object.entries(details).length > 0) {
         if (details.password.length > 6) {
-          firebase
+          setLoading(true);
+          await firebase
             .auth()
             .createUserWithEmailAndPassword(details.email, details.password)
             .then((userCredential) => {
               // Signed in
-              setLoading(true);
-              alert("You have registered successfully....");
+              alert("You have registered successfully....");          
               history.push("/signIn");
             })
             .catch((error) => {
-              if(error.message){
-                 let choice=window.confirm("Would you like to sign in instead??");
-                 if(choice)
-                    history.push("/signIn");
-              }
+              let choice = window.confirm(
+                "Would you like to sign in instead??"
+              );
+              if (choice) history.push("/signIn");
             });
         }
       }
     } else {
-        firebase
+       firebase
         .auth()
         .signInWithEmailAndPassword(details.email, details.password)
-        .then(async(userCredential) => {
+        .then(async (userCredential) => {
           setLoading(true);
           const id = userCredential.user.uid;
-          const uname=userCredential.user.email.split("@", 1);
-          const token= await userCredential.user.getIdToken(true);
-          localStorage.setItem("authorized",token);
-          history.push({ pathname: `/passaver/${uname}`, state: { id} });
+          const uname = userCredential.user.email.split("@", 1);
+          const token = await userCredential.user.getIdToken(true);
+          localStorage.setItem("authorized", token);
+          history.push({ pathname: `/passaver/${uname}`, state: { id } });
         })
         .catch((error) => {
-          if(error.message){
-              alert("The password is invalid.Please try again");
-          }
+          alert("The password is invalid.Please try again");
         });
     }
     setDetails(info);
   };
- 
+
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
@@ -117,7 +115,7 @@ function RForm({ btnName,setFunction }) {
               <button
                 disabled={loading}
                 type="submit"
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 disabled:opacity-50 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 {btnName}
               </button>

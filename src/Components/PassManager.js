@@ -18,15 +18,17 @@ function PassManager() {
   const [list, setList] = useState([]);
   const [state, setState] = useState(false);
   const [authorized, setAuth] = useState(true);
+  const [loading, setLoading] = useState(true);
   // eslint-disable-next-line
   const url = "https://server-app14.herokuapp.com";
   // eslint-disable-next-line
   const lurl = "http://localhost:3001";
 
   const fetch = () => {
-    Axios.get(`${url}/showPasswords/${uid}`).then((response) =>
-      setList(response.data)
-    );
+    Axios.get(`${url}/showPasswords/${uid}`).then((response) => {
+      setList(response.data);
+      setLoading(false);
+    });
   };
 
   const handleChange = (e) => {
@@ -90,7 +92,7 @@ function PassManager() {
   useEffect(() => {
     const timer = setTimeout(() => {
       fetch();
-    }, 100);
+    }, 1000);
     setState(false);
     if (!state) clearTimeout(timer);
     // eslint-disable-next-line
@@ -111,7 +113,7 @@ function PassManager() {
   return (
     <>
       <Navbar uname={uname} />
-      <div className="container max-w-full space-y-2.5  text-white ">
+      <div className="container max-w-full h-screen space-y-2.5  text-white ">
         <form onSubmit={handleSubmit} className="flex flex-col space-y-3">
           <button
             type="button"
@@ -141,39 +143,46 @@ function PassManager() {
               type="submit"
               className="bg-blue-300 rounded-2xl font-bold  p-2.5"
             >
-              {" "}
               Add Password
             </button>
           </div>
         </form>
-        <div className="Passwords">
-          {list.map((val, index) => {
-            return (
-              <div
-                className="flex justify-center items-baseline space-x-2 mb-2"
-                key={index}
-              >
+        {loading ? (
+          <p className="flex flex-col items-center my-72">
+            Loading Passwords....
+          </p>
+        ) : list.length > 0 ? (
+          <div className="Passwords">
+            {list.map((val, index) => {
+              return (
                 <div
-                  className="bg-blue-200 text-black  font-semibold text-xl px-2 py-3 rounded-3xl text-center w-3/5 md:w-4/12 xl:w-3/12"
-                  onClick={() => {
-                    decryptPassword({
-                      password: val.password.password,
-                      iv: val.password.iv,
-                    });
-                  }}
+                  className="flex justify-center items-baseline space-x-2 mb-2"
+                  key={index}
                 >
-                  <h3>{val.title}</h3>
+                  <div
+                    className="bg-blue-200 text-black  font-semibold text-xl px-2 py-3 rounded-3xl text-center w-3/5 md:w-4/12 xl:w-3/12"
+                    onClick={() => {
+                      decryptPassword({
+                        password: val.password.password,
+                        iv: val.password.iv,
+                      });
+                    }}
+                  >
+                    <h3>{val.title}</h3>
+                  </div>
+                  <button
+                    className="bg-blue-50 px-2 py-1.5 text-black rounded-2xl font-semibold"
+                    onClick={() => deletePass(val.id)}
+                  >
+                    Delete
+                  </button>
                 </div>
-                <button
-                  className="bg-blue-50 px-2 py-1.5 text-black rounded-2xl font-semibold"
-                  onClick={() => deletePass(val.id)}
-                >
-                  Delete
-                </button>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        ) : (
+          <p className="text-center mt-10">Password List Empty</p>
+        )}
       </div>
     </>
   );

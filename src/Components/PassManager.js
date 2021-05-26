@@ -100,6 +100,7 @@ function PassManager() {
 
   useEffect(() => {
     if (!authorized) {
+      localStorage.removeItem("authorized");
       firebase.auth().signOut();
       history.push("/signIn");
     }

@@ -20,10 +20,8 @@ function PassManager() {
   const [state, setState] = useState(false);
   const [authorized, setAuth] = useState(true);
   const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line
   const url = "https://server-app14.herokuapp.com";
-  // eslint-disable-next-line
-  const lurl = "http://localhost:3001";
+  
 
   const fetch = () => {
     Axios.get(`${url}/showPasswords/${uid}`).then((response) => {

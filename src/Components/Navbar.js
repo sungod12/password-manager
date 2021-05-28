@@ -15,9 +15,15 @@ function Navbar({ uname }) {
         <div className="p-5 flex justify-between font-semibold text-white">
           <p>Home</p>
           <div>
-            <NavLink to="/" activeClassName="font-semibold" className="mr-2.5 ">
-              Register
-            </NavLink>
+            <>
+              <NavLink
+                to="/"
+                activeClassName="font-semibold"
+                className="mr-2.5 "
+              >
+                Register
+              </NavLink>
+            </>
             <NavLink
               to="/signIn"
               activeClassName="font-semibold"
@@ -29,7 +35,7 @@ function Navbar({ uname }) {
         </div>
       );
     }
-  }
+  };
   return <Component />;
 }
 

@@ -4,6 +4,7 @@ import "firebase/auth";
 import { useHistory } from "react-router-dom";
 import Navbar from "./Navbar";
 
+
 function RForm({ btnName, setFunction }) {
   const info = {
     email: "",
@@ -64,8 +65,8 @@ function RForm({ btnName, setFunction }) {
 
   return (
     <>
-      <Navbar />
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <Navbar/>
+      <div className="min-h-screen flex items-center justify-center  py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
             <img
@@ -73,7 +74,7 @@ function RForm({ btnName, setFunction }) {
               src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
               alt="Workflow"
             />
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
               {setFunction} your account
             </h2>
           </div>

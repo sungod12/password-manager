@@ -5,6 +5,7 @@ import firebase from "./firebase";
 import "firebase/auth";
 import Navbar from "./Navbar";
 
+
 function PassManager() {
   const history = useHistory();
   const { uname } = useParams();
@@ -20,6 +21,7 @@ function PassManager() {
   const [authorized, setAuth] = useState(true);
   const [loading, setLoading] = useState(true);
   const url = "https://server-app14.herokuapp.com";
+  
 
   const fetch = () => {
     Axios.get(`${url}/showPasswords/${uid}`).then((response) => {
@@ -110,7 +112,7 @@ function PassManager() {
 
   return (
     <>
-      <Navbar uname={uname} />
+      <Navbar uname={uname}  />
       <div className="container max-w-full h-screen space-y-2.5  text-white ">
         <form onSubmit={handleSubmit} className="flex flex-col space-y-3">
           <button

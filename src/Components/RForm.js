@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import firebase from "firebase/app";
-import "firebase/auth";
 import { useHistory } from "react-router-dom";
 import Navbar from "./Navbar";
-
+import { useAuth } from "../Contexts/AuthProvider";
 
 function RForm({ btnName, setFunction }) {
   const info = {
@@ -11,6 +9,7 @@ function RForm({ btnName, setFunction }) {
     password: "",
   };
   const [details, setDetails] = useState(info);
+  const { login, signup } = useAuth();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
 
@@ -22,50 +21,47 @@ function RForm({ btnName, setFunction }) {
     });
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (btnName === "Register") {
       if (Object.entries(details).length > 0) {
         if (details.password.length > 6) {
-          setLoading(true);
-          await firebase
-            .auth()
-            .createUserWithEmailAndPassword(details.email, details.password)
-            .then((userCredential) => {
-              // Signed in
-              alert("You have registered successfully....");          
-              history.push("/signIn");
-            })
-            .catch((error) => {
-              let choice = window.confirm(
-                "Would you like to sign in instead??"
-              );
-              if (choice) history.push("/signIn");
-            });
+          try {
+            setLoading(true);
+            await signup(details.email, details.password);
+            setLoading(false);
+            alert("You have registered successfully....");
+            history.push("/signIn");
+          } catch {
+            let choice = window.confirm("Would you like to sign in instead??");
+            if (choice) history.push("/signIn");
+          }
         }
       }
     } else {
-       firebase
-        .auth()
-        .signInWithEmailAndPassword(details.email, details.password)
-        .then(async (userCredential) => {
-          setLoading(true);
-          const id = userCredential.user.uid;
-          const uname = userCredential.user.email.split("@", 1);
-          const token = await userCredential.user.getIdToken(true);
-          localStorage.setItem("authorized", token);
-          history.push({ pathname: `/passaver/${uname}`, state: { id } });
-        })
-        .catch((error) => {
-          alert("The password is invalid.Please try again");
+      try {
+        setLoading(true);
+        const userCredentials = await login(details.email, details.password);
+        const { email } = userCredentials.user;
+        const id = userCredentials.user.uid;
+        const token = await userCredentials.user.getIdToken(true);
+        setDetails(info);
+        localStorage.setItem("authorized", token);
+        history.push({
+          pathname: `/passaver/${email.split("@", 1)}`,
+          state: { id },
         });
+      } catch {
+        alert("Wrong email or password!!");
+        setDetails(info);
+        setLoading(false);
+      }
     }
-    setDetails(info);
   };
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div className="min-h-screen flex items-center justify-center  py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>

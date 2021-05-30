@@ -5,20 +5,23 @@ import Login from "./Login";
 import ProtectedRoutes from "../Routes/ProtectedRoutes";
 import PassManager from "./PassManager";
 import "./css/index.css";
+import { AuthProvider } from "../Contexts/AuthProvider";
 
 function App() {
   return (
     <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={Register} />
-        <Route exact path="/signIn" component={Login}/>
-        <ProtectedRoutes
-          component={PassManager}
-          exact
-          path="/passaver/:uname"
-        />
-        <Redirect path="*" to="/" />
-      </Switch>
+      <AuthProvider>
+        <Switch>
+          <Route exact path="/" component={Register} />
+          <Route exact path="/signIn" component={Login} />
+          <ProtectedRoutes
+            component={PassManager}
+            exact
+            path="/passaver/:uname"
+          />
+          <Redirect path="*" to="/" />
+        </Switch>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

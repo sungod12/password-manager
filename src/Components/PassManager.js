@@ -108,16 +108,9 @@ function PassManager() {
 
   return (
     <>
-      <Navbar uname={uname} />
+      <Navbar uname={uname} logout={check} />
       <div className="container max-w-full h-screen space-y-2.5  text-white ">
         <form onSubmit={handleSubmit} className="flex flex-col space-y-3">
-          <button
-            type="button"
-            onClick={check}
-            className="bg-blue-300 px-6 py-2 ml-auto mr-2.5 outline-none rounded-3xl font-bold xl:px-3.5  hover:bg-blue-500"
-          >
-            Logout
-          </button>
           <div className="flex flex-col space-y-3 items-center bg-blue-400 rounded-2xl mx-auto w-11/12 py-10 md:w-6/12 xl:w-4/12">
             <input
               type="password"

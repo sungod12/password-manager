@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Navbar from "./Navbar";
 import { useAuth } from "../Contexts/AuthProvider";
+import Alert from "./Alert";
 
 function RForm({ btnName, setFunction }) {
   const info = {
     email: "",
     password: "",
   };
+  const [isOpen, setIsOpen] = useState(false);
+  const [response, setResponse] = useState("");
+  const [message, setMessage] = useState("");
   const [details, setDetails] = useState(info);
   const { login, signup } = useAuth();
   const history = useHistory();
@@ -30,7 +34,9 @@ function RForm({ btnName, setFunction }) {
             setLoading(true);
             await signup(details.email, details.password);
             setLoading(false);
-            alert("You have registered successfully....");
+            setResponse("Success");
+            setMessage("You have registered successfully....");
+            setIsOpen(true);
             history.push("/signIn");
           } catch {
             let choice = window.confirm("Would you like to sign in instead??");
@@ -48,11 +54,13 @@ function RForm({ btnName, setFunction }) {
         setDetails(info);
         localStorage.setItem("authorized", token);
         history.push({
-          pathname: `/passaver/${email.split("@", 1)}`,
+          pathname: `/passaver/${email.split("@", 1)}/`,
           state: { id },
         });
       } catch {
-        alert("Wrong email or password!!");
+        setResponse("Error");
+        setMessage("Wrong email or password!!");
+        setIsOpen(true);
         setDetails(info);
         setLoading(false);
       }
@@ -62,6 +70,12 @@ function RForm({ btnName, setFunction }) {
   return (
     <>
       <Navbar />
+      <Alert
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        response={response}
+        message={message}
+      />
       <div className="min-h-screen flex items-center justify-center  py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
@@ -76,7 +90,7 @@ function RForm({ btnName, setFunction }) {
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <input type="hidden" name="remember" defaultValue="true" />
-            <div className="rounded-md shadow-sm -space-y-px">
+            <div className="shadow-sm space-y-1">
               <div>
                 <label htmlFor="email-address" className="sr-only">
                   Email address
@@ -88,7 +102,7 @@ function RForm({ btnName, setFunction }) {
                   onChange={handleChange}
                   autoComplete="off"
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none  relative block w-full px-3 py-2  rounded-md border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Email address"
                 />
               </div>
@@ -103,7 +117,7 @@ function RForm({ btnName, setFunction }) {
                   required
                   value={details.password}
                   onChange={handleChange}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none relative block w-full px-3 py-2 rounded-md  border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
                 />
               </div>

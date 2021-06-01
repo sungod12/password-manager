@@ -32,12 +32,12 @@ function Navbar({ uname, logout }) {
               >
                 <ul className="px-4 list-none ml-auto ">
                   <li className="nav-item flex flex-col items-end w-28 pr-2.5 bg-blue-400 rounded-lg lg:flex-row lg:space-x-2 lg:rounded-none lg:bg-transparent lg:w-auto">
-                    <NavLink
+                    {/* <NavLink
                       className="py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                      to="/passaver/profile"
+                      to="/"
                     >
                       Profile
-                    </NavLink>
+                    </NavLink> */}
                     {uname ? (
                       <button
                         type="button"

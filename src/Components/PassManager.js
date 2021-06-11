@@ -97,7 +97,7 @@ function PassManager() {
     if (!authorized) {
       localStorage.removeItem("authorized");
       firebase.auth().signOut();
-      history.pop();
+      history.replace("/signIn");
     }
   });
 

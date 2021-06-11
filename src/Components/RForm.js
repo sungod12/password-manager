@@ -76,61 +76,47 @@ function RForm({ btnName, setFunction }) {
         response={response}
         message={message}
       />
-      <div className="min-h-screen flex items-center justify-center  py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-8">
-          <div>
-            <img
-              className="mx-auto h-12 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-              alt="Workflow"
-            />
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
-              {setFunction} your account
-            </h2>
-          </div>
+      <div className="hero-container">
+        <div className="sub-container">
+          <img
+            className="logo"
+            src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+            alt="Workflow"
+          />
+          <h2 className="account-text">{setFunction} your account</h2>
+
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-            <input type="hidden" name="remember" defaultValue="true" />
-            <div className="shadow-sm space-y-1">
-              <div>
-                <label htmlFor="email-address" className="sr-only">
-                  Email address
-                </label>
-                <input
-                  name="email"
-                  type="email"
-                  value={details.email}
-                  onChange={handleChange}
-                  autoComplete="off"
-                  required
-                  className="appearance-none  relative block w-full px-3 py-2  rounded-md border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Email address"
-                />
-              </div>
-              <div>
-                <label htmlFor="password" className="sr-only">
-                  Password
-                </label>
-                <input
-                  name="password"
-                  type="password"
-                  autoComplete="off"
-                  required
-                  value={details.password}
-                  onChange={handleChange}
-                  className="appearance-none relative block w-full px-3 py-2 rounded-md  border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Password"
-                />
-              </div>
+            <div className="space-y-1">
+              <label htmlFor="email-address" className="sr-only">
+                Email address
+              </label>
+              <input
+                name="email"
+                type="email"
+                value={details.email}
+                onChange={handleChange}
+                autoComplete="off"
+                required
+                className="input"
+                placeholder="Email address"
+              />
+              <label htmlFor="password" className="sr-only">
+                Password
+              </label>
+              <input
+                name="password"
+                type="password"
+                autoComplete="off"
+                required
+                value={details.password}
+                onChange={handleChange}
+                className="input"
+                placeholder="Password"
+              />
             </div>
-            <div>
-              <button
-                disabled={loading}
-                type="submit"
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 disabled:opacity-50 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                {btnName}
-              </button>
-            </div>
+            <button disabled={loading} type="submit" className="submit-btn">
+              {btnName}
+            </button>
           </form>
         </div>
       </div>

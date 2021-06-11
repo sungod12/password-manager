@@ -1,16 +1,97 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+
+body {
+  background: rgba(59, 130, 246);
 }
-body{
-    /* background:lightskyblue; */
-    background:rgba(59, 130, 246);
+
+/* For registration and sign in screen */
+
+.hero-container {
+  @apply min-h-screen flex items-center justify-center  py-12 px-4 sm:px-6 lg:px-8;
 }
-button{
-    outline: none;
-    /* border: none; */
+
+.sub-container {
+  @apply max-w-md w-full space-y-8;
 }
+
+.logo {
+  @apply mx-auto h-12 w-auto;
+}
+
+.account-text {
+  @apply mt-6 text-center text-3xl font-extrabold text-white;
+}
+
+.input {
+  @apply appearance-none  relative block w-full px-3 py-2  rounded-md border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm;
+}
+
+.submit-btn {
+  @apply group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 disabled:opacity-50 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
+}
+/* */
+
+/*For Password Manager Screen*/
+.main-container {
+  @apply container max-w-full h-screen space-y-2.5  text-white;
+}
+
+/*Password Form*/
+.form-container {
+  @apply flex flex-col space-y-3 items-center bg-blue-400 
+  rounded-2xl mx-auto w-11/12 max-w-md py-10 shadow-lg;
+}
+
+.input-field {
+  @apply px-8 py-2.5 text-black rounded-3xl outline-none;
+}
+
+.add-password-btn {
+  @apply bg-blue-300 rounded-2xl font-bold  p-2.5;
+}
+/* */
+
+/*Displaying Passwords*/
+.loading-message {
+  @apply grid place-items-center my-72;
+}
+
+.password-container {
+  @apply flex justify-center items-baseline space-x-2 mb-2;
+}
+
+.password-bar {
+  @apply bg-blue-200 text-black  font-semibold text-xl px-2 py-3 
+  rounded-3xl text-center w-3/5 max-w-xs cursor-pointer;
+}
+
+.delete-btn {
+  @apply bg-blue-50 px-2 py-1.5 text-black 
+  rounded-2xl font-semibold hover:bg-blue-300 hover:text-white;
+}
+
+.empty-list-message {
+  @apply text-center mt-10;
+}
+/* */
+
+@screen md {
+  .form-container {
+    width: 50%;
+  }
+  .password-bar {
+    width: 33.33%;
+  }
+}
+
+@screen xl {
+  .form-container {
+    width: 33.33%;
+  }
+  .password-bar {
+    width: 18rem;
+  }
+}
+/* */

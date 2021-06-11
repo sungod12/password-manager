@@ -97,7 +97,7 @@ function PassManager() {
     if (!authorized) {
       localStorage.removeItem("authorized");
       firebase.auth().signOut();
-      history.push("/signIn");
+      history.pop();
     }
   });
 
@@ -109,47 +109,38 @@ function PassManager() {
   return (
     <>
       <Navbar uname={uname} logout={check} />
-      <div className="container max-w-full h-screen space-y-2.5  text-white ">
-        <form onSubmit={handleSubmit} className="flex flex-col space-y-3">
-          <div className="flex flex-col space-y-3 items-center bg-blue-400 rounded-2xl mx-auto w-11/12 py-10 md:w-6/12 xl:w-4/12">
-            <input
-              type="password"
-              placeholder="Ex. password123"
-              name="pass"
-              value={details.pass}
-              onChange={handleChange}
-              className="px-8 py-2.5 text-black rounded-3xl outline-none"
-            />
-            <input
-              type="text"
-              placeholder="Ex. Facebook"
-              name="title"
-              value={details.title}
-              onChange={handleChange}
-              className="px-8 py-2.5 text-black rounded-3xl outline-none"
-            />
-            <button
-              type="submit"
-              className="bg-blue-300 rounded-2xl font-bold  p-2.5"
-            >
-              Add Password
-            </button>
-          </div>
+      <div className="main-container">
+        <form onSubmit={handleSubmit} className="form-container">
+          <input
+            type="password"
+            placeholder="Ex. password123"
+            name="pass"
+            value={details.pass}
+            onChange={handleChange}
+            className="input-field"
+          />
+          <input
+            type="text"
+            placeholder="Ex. Facebook"
+            name="title"
+            value={details.title}
+            onChange={handleChange}
+            className="input-field"
+          />
+          <button type="submit" className="add-password-btn">
+            Add Password
+          </button>
         </form>
+
         {loading ? (
-          <p className="flex flex-col items-center my-72">
-            Loading Passwords....
-          </p>
+          <p className="loading-message">Loading Passwords....</p>
         ) : list.length > 0 ? (
           <div className="Passwords">
-            {list.map((val, index) => {
+            {list.map((val) => {
               return (
-                <div
-                  className="flex justify-center items-baseline space-x-2 mb-2"
-                  key={index}
-                >
+                <div className="password-container" key={val.id}>
                   <div
-                    className="bg-blue-200 text-black  font-semibold text-xl px-2 py-3 rounded-3xl text-center w-3/5 md:w-4/12 xl:w-3/12"
+                    className="password-bar"
                     onClick={() => {
                       decryptPassword({
                         password: val.password.password,
@@ -160,7 +151,7 @@ function PassManager() {
                     <h3>{val.title}</h3>
                   </div>
                   <button
-                    className="bg-blue-50 px-2 py-1.5 text-black rounded-2xl font-semibold"
+                    className="delete-btn"
                     onClick={() => deletePass(val.id)}
                   >
                     Delete
@@ -170,7 +161,7 @@ function PassManager() {
             })}
           </div>
         ) : (
-          <p className="text-center mt-10">Password List Empty</p>
+          <p className="empty-list-message">Password List Empty</p>
         )}
       </div>
     </>

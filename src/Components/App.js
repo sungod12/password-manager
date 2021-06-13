@@ -6,6 +6,7 @@ import ProtectedRoutes from "../Routes/ProtectedRoutes";
 import PassManager from "./PassManager";
 import "./css/index.css";
 import { AuthProvider } from "../Contexts/AuthProvider";
+import PasswordReset from "./PasswordReset";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Register} />
           <Route exact path="/signIn" component={Login} />
+          <Route exact path="/passwordReset" component={PasswordReset} />
           <ProtectedRoutes
             component={PassManager}
             exact

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, NavLink } from "react-router-dom";
 import Navbar from "./Navbar";
 import { useAuth } from "../Contexts/AuthProvider";
 import Alert from "./Alert";
@@ -33,10 +33,10 @@ function RForm({ btnName, setFunction }) {
           try {
             setLoading(true);
             await signup(details.email, details.password);
-            setLoading(false);
             setResponse("Success");
             setMessage("You have registered successfully....");
             setIsOpen(true);
+            setLoading(false);
             history.push("/signIn");
           } catch {
             let choice = window.confirm("Would you like to sign in instead??");
@@ -48,7 +48,7 @@ function RForm({ btnName, setFunction }) {
       try {
         setLoading(true);
         const userCredentials = await login(details.email, details.password);
-        const { email } = userCredentials.user;
+        const email = userCredentials.user.email;
         const id = userCredentials.user.uid;
         const token = await userCredentials.user.getIdToken(true);
         setDetails(info);
@@ -117,6 +117,9 @@ function RForm({ btnName, setFunction }) {
             <button disabled={loading} type="submit" className="submit-btn">
               {btnName}
             </button>
+            <NavLink to="/passwordReset" className="password-reset-link">
+              {btnName === "SignIn" ? "Forgot Password?" : ""}
+            </NavLink>
           </form>
         </div>
       </div>

@@ -1,8 +1,7 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
-function Alert({ isOpen, setIsOpen, response,message}) {
-  
+function Alert({ isOpen, setIsOpen, response, message }) {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -45,7 +44,6 @@ function Alert({ isOpen, setIsOpen, response,message}) {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  {/* Registration successful */}
                   {response}
                 </Dialog.Title>
                 <div className="mt-2">

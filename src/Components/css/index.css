@@ -6,14 +6,74 @@ body {
   background: rgba(59, 130, 246);
 }
 
+/*NavBar*/
+.navigation-container {
+  @apply flex flex-wrap py-2.5 sm:px-2.5;
+}
+
+.nav-container {
+  @apply relative flex items-center justify-between py-1.5;
+}
+
+.nav-div {
+  @apply container  mx-auto flex flex-wrap items-center justify-between sm:flex-nowrap;
+}
+
+.navigation {
+  @apply w-full relative flex justify-between sm:w-auto px-4 sm:static sm:block sm:justify-start;
+}
+
+.menu-button {
+  @apply text-white cursor-pointer text-xl leading-none  py-1 border border-solid 
+  border-transparent rounded bg-transparent block sm:hidden outline-none 
+  focus:outline-none;
+}
+
+.nav-logo {
+  @apply inline-block w-8 xl:w-10;
+}
+
+.username {
+  @apply font-semibold text-white capitalize mr-1.5 sm:hidden;
+}
+
+.user-icon {
+  @apply bg-white px-4 py-2.5 rounded-3xl text-sm font-semibold capitalize text-black;
+}
+
+.list {
+  @apply px-4 list-none ml-auto sm:p-0;
+}
+
+.navlink-list {
+  @apply flex flex-col items-end w-28 pr-2.5 bg-blue-400 rounded-lg sm:flex-row sm:space-x-2 sm:rounded-none sm:bg-transparent sm:w-auto sm:items-baseline;
+}
+
+.profile-link {
+  @apply pt-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75 sm:pt-0;
+}
+
+.register-link {
+  @apply profile-link;
+}
+
+.signin-link {
+  @apply profile-link py-3.5 !important;
+}
+.logout-button {
+  @apply profile-link py-2 !important;
+}
+
+/* */
+
 /* For registration and sign in screen */
 
 .hero-container {
-  @apply min-h-screen flex items-center justify-center  py-12 px-4 sm:px-6 lg:px-8;
+  @apply min-h-screen flex items-center justify-center pb-40 px-4 sm:px-6 lg:px-8;
 }
 
 .sub-container {
-  @apply max-w-md w-full space-y-8;
+  @apply max-w-md space-y-8 bg-blue-400 px-6 py-9 rounded-xl shadow-md sm:py-16;
 }
 
 .logo {
@@ -25,15 +85,34 @@ body {
 }
 
 .input {
-  @apply appearance-none  relative block w-full px-3 py-2  rounded-md border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm;
+  @apply appearance-none  relative block w-full px-3 py-2  
+  rounded-md border border-gray-300 placeholder-gray-500 text-gray-900  
+  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10;
 }
 
 .submit-btn {
   @apply group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 disabled:opacity-50 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
 }
+
+.password-reset-link {
+  @apply grid place-items-center  font-semibold text-white;
+}
+
 /* */
 
+/*Password Reset*/
+
+.reset-container {
+  @apply sub-container  w-full !important;
+}
+
+.reset-btn {
+  @apply submit-btn w-6/12 mx-auto !important;
+}
+/**/
+
 /*For Password Manager Screen*/
+
 .main-container {
   @apply container max-w-full h-screen space-y-2.5  text-white;
 }
@@ -51,9 +130,11 @@ body {
 .add-password-btn {
   @apply bg-blue-300 rounded-2xl font-bold  p-2.5;
 }
+
 /* */
 
 /*Displaying Passwords*/
+
 .loading-message {
   @apply grid place-items-center my-72;
 }
@@ -75,7 +156,15 @@ body {
 .empty-list-message {
   @apply text-center mt-10;
 }
+
 /* */
+
+@screen sm {
+  .input {
+    font-size: 0.875rem /* 14px */;
+    line-height: 1.25rem;
+  }
+}
 
 @screen md {
   .form-container {

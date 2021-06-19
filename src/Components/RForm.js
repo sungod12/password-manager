@@ -10,7 +10,7 @@ function RForm({ btnName, setFunction }) {
     password: "",
   };
   const [isOpen, setIsOpen] = useState(false);
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState(false);
   const [message, setMessage] = useState("");
   const [details, setDetails] = useState(info);
   const { login, signup } = useAuth();
@@ -33,14 +33,19 @@ function RForm({ btnName, setFunction }) {
           try {
             setLoading(true);
             await signup(details.email, details.password);
-            setResponse("Success");
+            setResponse(true);
             setMessage("You have registered successfully....");
             setIsOpen(true);
             setLoading(false);
-            history.push("/signIn");
+            const timedpush = () => {
+              setTimeout(() => history.push("/signIn"), 5000);
+            };
+            timedpush();
+            clearTimeout(timedpush);
           } catch {
             let choice = window.confirm("Would you like to sign in instead??");
             if (choice) history.push("/signIn");
+            else setLoading(false);
           }
         }
       }
@@ -58,7 +63,7 @@ function RForm({ btnName, setFunction }) {
           state: { id },
         });
       } catch {
-        setResponse("Error");
+        setResponse(false);
         setMessage("Wrong email or password!!");
         setIsOpen(true);
         setDetails(info);
@@ -70,12 +75,6 @@ function RForm({ btnName, setFunction }) {
   return (
     <>
       <Navbar />
-      <Alert
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        response={response}
-        message={message}
-      />
       <div className="hero-container">
         <div className="sub-container">
           <img
@@ -84,6 +83,15 @@ function RForm({ btnName, setFunction }) {
             alt="Workflow"
           />
           <h2 className="account-text">{setFunction} your account</h2>
+          {isOpen ? (
+            <Alert
+              message={message}
+              response={response}
+              setIsOpen={setIsOpen}
+            />
+          ) : (
+            ""
+          )}
 
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-1">
@@ -118,7 +126,7 @@ function RForm({ btnName, setFunction }) {
               {btnName}
             </button>
             <NavLink to="/passwordReset" className="password-reset-link">
-              {btnName === "SignIn" ? "Forgot Password?" : ""}
+              {btnName === "Sign In" ? "Forgot Password?" : ""}
             </NavLink>
           </form>
         </div>

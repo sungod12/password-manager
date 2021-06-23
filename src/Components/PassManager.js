@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import firebase from "./firebase";
-import "firebase/auth";
 import Navbar from "./Navbar";
+import { useAuth } from "../Contexts/AuthProvider";
 
 function PassManager() {
   const history = useHistory();
   const { uname } = useParams();
   const location = useLocation();
+  const { logout } = useAuth();
   const uid = location.state.id;
   const info = {
     title: "",
@@ -96,7 +96,7 @@ function PassManager() {
   useEffect(() => {
     if (!authorized) {
       localStorage.removeItem("authorized");
-      firebase.auth().signOut();
+      logout();
       history.replace("/signIn");
     }
   });

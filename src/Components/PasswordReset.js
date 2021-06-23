@@ -1,7 +1,6 @@
 import React from "react";
 import Navbar from "./Navbar";
-import firebase from "firebase/app";
-import "firebase/auth";
+import { useAuth } from "../Contexts/AuthProvider";
 import Alert from "./Alert";
 
 function PasswordReset({ history }) {
@@ -9,6 +8,7 @@ function PasswordReset({ history }) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [response, setResponse] = React.useState(false);
   const [message, setMessage] = React.useState("");
+  const { resetPass } = useAuth();
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -17,8 +17,13 @@ function PasswordReset({ history }) {
 
   const resetPassword = async (e) => {
     e.preventDefault();
-    try {
-      await firebase.auth().sendPasswordResetEmail(email);
+    const res = await resetPass(email);
+    const data = await res.data;
+    if (data.code === "auth/user-not-found") {
+      setIsOpen(true);
+      setResponse(false);
+      setMessage("Email does not exist.");
+    } else {
       setEmail("");
       setIsOpen(true);
       setResponse(true);
@@ -30,10 +35,6 @@ function PasswordReset({ history }) {
       };
       timer();
       clearTimeout(timer);
-    } catch (error) {
-      setIsOpen(true);
-      setResponse(false);
-      setMessage("Email does not exist.");
     }
   };
 

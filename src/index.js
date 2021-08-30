@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./Components/App";
-import "./Components/css/index.css";
+import "./css/index.css";
 
 /*
   Project inspired from PedroTech PasswordManager

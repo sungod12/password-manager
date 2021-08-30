@@ -4,7 +4,7 @@ import Register from "./Register";
 import Login from "./Login";
 import ProtectedRoutes from "../Routes/ProtectedRoutes";
 import PassManager from "./PassManager";
-import "./css/index.css";
+import "../css/index.css";
 import { AuthProvider } from "../Contexts/AuthProvider";
 import PasswordReset from "./PasswordReset";
 

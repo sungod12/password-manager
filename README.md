@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+# Password Manager (Passaver)
+A simple password manager created using **React** for Frontend and **Node JS** as server and CRUD requests and **Firebase** as database for handling authentication and for storing user's password and their respective accounts.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Screenshots
+- Register Screen
 
-## Available Scripts
+  ![image](https://user-images.githubusercontent.com/55348832/153449320-2c6f4e99-b0fc-4d5b-847e-251669bcd254.png)
+  
+- Login Screen
 
-In the project directory, you can run:
+  ![image](https://user-images.githubusercontent.com/55348832/153449581-91dc1cc7-719c-4d0f-b534-5a1069b50545.png)
 
-### `npm start`
+- Main Screen
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+  ![image](https://user-images.githubusercontent.com/55348832/153449869-261f427b-b956-4d23-8774-cde8b6193713.png)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Application Flow
+- User registers by using his email and password. After successfully registering,he is greeted with sign in screen.
+- After entering the correct credentials,he/she will be shown his/her saved passwords,if there are any.Otherwise,the screen will be empty with just a card to add name of service     the password is associated with.
+  - In case,the user forgots his/her password ,he/she can also click on "Forgot Password" option below the Sign In button,where he/she has to enter his/her registered email id.
+  - An email will 
+- After entering the required details,they will be saved in database and shown in the screen. There will also be delete button in case he wants to delete the password.
+- In case,user enters a different password for same service **(account)**. He/she will be shown a prompt,that password for same service **(account)** exists.
 
-### `npm test`
+## Learnings
+- Firebase Integration 
+  -  Working with Authentication tokens.
+  -  CRUD Operations
+- Hosting a Server and FrontEnd on Heroku and Netlify.
+- React Router.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Future Changes
+-  Signing in using Google.
+-  Signing in using Facebook.
+-  Update saved passwords.

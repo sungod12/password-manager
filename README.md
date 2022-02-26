@@ -40,7 +40,10 @@ A simple password manager created using **React** for Frontend and **Node JS** a
 
 In the project directory, run:
 
+### `npm install`
+
+This will install the required dependencies and run the app in the development mode,and then run 
+
 ### `npm start`
 
-This will install the required dependencies and run the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.

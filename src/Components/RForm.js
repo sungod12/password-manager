@@ -62,6 +62,12 @@ function RForm({ btnName, setFunction, setToken }) {
         setIsOpen(true);
         setDetails(info);
         setLoading(false);
+      } else if (result.code === "auth/user-not-found") {
+        setResponse(false);
+        setMessage("User not found!!");
+        setIsOpen(true);
+        setDetails(info);
+        setLoading(false);
       } else {
         setToken(result.user.stsTokenManager.accessToken);
         // console.log("token" + result.user.stsTokenManager.refreshToken);

@@ -85,7 +85,7 @@ body {
 }
 
 .input {
-  @apply appearance-none  relative block w-full px-3 py-2  
+  @apply appearance-none  relative block w-full px-3 py-2 
   rounded-md border border-gray-300 placeholder-gray-500 text-gray-900  
   focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10;
 }
@@ -131,6 +131,10 @@ body {
   @apply bg-blue-300 rounded-2xl font-bold  p-2.5;
 }
 
+.add-password-btn:focus {
+  border: none;
+  outline: none;
+}
 /* */
 
 /*Displaying Passwords*/
@@ -153,6 +157,10 @@ body {
   rounded-2xl font-semibold hover:bg-blue-300 hover:text-white;
 }
 
+.delete-btn:focus {
+  border: none;
+  outline: none;
+}
 .empty-list-message {
   @apply text-center mt-10;
 }

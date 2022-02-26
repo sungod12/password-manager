@@ -29,7 +29,7 @@ function PassManager({ token }) {
 
   const fetch = () => {
     Axios.get(`${url}/showPasswords/${uid}`, config).then((response) => {
-      setList(response.data);
+      setList(response.data.result);
       setLoading(false);
     });
   };
@@ -56,21 +56,23 @@ function PassManager({ token }) {
       });
       if (containsPass)
         alert(`You already have a password for ${details.title}`);
-      else {
-        Axios.post(
-          `${url}/addPassword`,
-          {
-            id: uid,
-            title:
-              details.title[0].toUpperCase() +
-              details.title.substring(1, details.title.length),
-            password: details.pass,
-          },
-          config
-        ).catch((err) => console.log(err));
-      }
-      setDetails(info);
+      else addPassword();
     }
+    setDetails(info);
+  };
+
+  const addPassword = () => {
+    Axios.post(
+      `${url}/addPassword`,
+      {
+        id: uid,
+        title:
+          details.title[0].toUpperCase() +
+          details.title.substring(1, details.title.length),
+        password: details.pass,
+      },
+      config
+    ).catch((err) => console.log(err));
   };
 
   const deletePass = (value) => {
@@ -141,7 +143,6 @@ function PassManager({ token }) {
             Add Password
           </button>
         </form>
-
         {loading ? (
           <p className="loading-message">Loading Passwords....</p>
         ) : list.length > 0 ? (
@@ -171,7 +172,7 @@ function PassManager({ token }) {
             })}
           </div>
         ) : (
-          <p className="empty-list-message">Password List Empty</p>
+          <p className="empty-list-message">No Passwords Found</p>
         )}
       </div>
     </>

@@ -19,7 +19,12 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start:dev":"env-cmd -f environments/.dev.env craco start",
+    "build:dev":"env-cmd -f environments/.dev.env npm run-script build",
+    "start:prod":"env-cmd -f environments/.prod.env craco start",
+    "build:prod":"env-cmd -f environments/.prod.env npm run-script build"
+    
   },
   "eslintConfig": {
     "extends": [

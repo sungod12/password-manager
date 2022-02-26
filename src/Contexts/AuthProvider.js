@@ -8,7 +8,7 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  const url = "https://server-app14.herokuapp.com";
+  const url = process.env.REACT_APP_API_END_POINT;
   const signup = (email, password) => {
     return Axios.post(`${url}/register`, { email, password });
   };

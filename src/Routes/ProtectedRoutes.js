@@ -8,7 +8,7 @@ function ProtectedRoutes({ isAuth, component: Component, ...rest }) {
       {...rest}
       render={(props) => {
         if (storage) {
-          return <Component />;
+          return <Component token={rest.token} />;
         } else {
           return (
             <Redirect

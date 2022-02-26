@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Register from "./Register";
 import Login from "./Login";
@@ -9,16 +9,20 @@ import { AuthProvider } from "../Contexts/AuthProvider";
 import PasswordReset from "./PasswordReset";
 
 function App() {
+  const [token, setToken] = useState("");
   return (
     <BrowserRouter>
       <AuthProvider>
         <Switch>
           <Route exact path="/" component={Register} />
-          <Route exact path="/signIn" component={Login} />
+          <Route exact path="/signIn">
+            <Login setToken={setToken} />
+          </Route>
           <Route exact path="/passwordReset" component={PasswordReset} />
           <ProtectedRoutes
             component={PassManager}
             exact
+            token={token}
             path="/passaver/:uname"
           />
           <Redirect path="*" to="/" />

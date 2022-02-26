@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 import { useAuth } from "../Contexts/AuthProvider";
 import Alert from "./Alert";
 
-function RForm({ btnName, setFunction }) {
+function RForm({ btnName, setFunction, setToken }) {
   const info = {
     email: "",
     password: "",
@@ -63,6 +63,8 @@ function RForm({ btnName, setFunction }) {
         setDetails(info);
         setLoading(false);
       } else {
+        setToken(result.user.stsTokenManager.accessToken);
+        // console.log("token" + result.user.stsTokenManager.refreshToken);
         const email = result.user.email;
         const id = result.user.uid;
         const token = await result.user.stsTokenManager.refreshToken;

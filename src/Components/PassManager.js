@@ -4,12 +4,13 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import { useAuth } from "../Contexts/AuthProvider";
 
-function PassManager() {
+function PassManager({ token }) {
   const history = useHistory();
   const { uname } = useParams();
   const location = useLocation();
   const { logout } = useAuth();
   const uid = location.state.id;
+
   const info = {
     title: "",
     pass: "",
@@ -19,10 +20,15 @@ function PassManager() {
   const [state, setState] = useState(false);
   const [authorized, setAuth] = useState(true);
   const [loading, setLoading] = useState(true);
-  const url = "https://server-app14.herokuapp.com";
+  const url = process.env.REACT_APP_API_END_POINT;
+  const config = {
+    headers: {
+      Authorization: "Bearer" + token,
+    },
+  };
 
   const fetch = () => {
-    Axios.get(`${url}/showPasswords/${uid}`).then((response) => {
+    Axios.get(`${url}/showPasswords/${uid}`, config).then((response) => {
       setList(response.data);
       setLoading(false);
     });
@@ -51,13 +57,17 @@ function PassManager() {
       if (containsPass)
         alert(`You already have a password for ${details.title}`);
       else {
-        Axios.post(`${url}/addPassword`, {
-          id: uid,
-          title:
-            details.title[0].toUpperCase() +
-            details.title.substr(1, details.title.length),
-          password: details.pass,
-        }).catch((err) => console.log(err));
+        Axios.post(
+          `${url}/addPassword`,
+          {
+            id: uid,
+            title:
+              details.title[0].toUpperCase() +
+              details.title.substring(1, details.title.length),
+            password: details.pass,
+          },
+          config
+        ).catch((err) => console.log(err));
       }
       setDetails(info);
     }
@@ -95,7 +105,7 @@ function PassManager() {
 
   useEffect(() => {
     if (!authorized) {
-      localStorage.removeItem("authorized");
+      localStorage.clear();
       logout();
       history.replace("/signIn");
     }
